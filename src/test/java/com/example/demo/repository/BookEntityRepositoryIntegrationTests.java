@@ -1,8 +1,8 @@
 package com.example.demo.repository;
 
 import com.example.demo.TestDataUtil;
-import com.example.demo.domain.Author;
-import com.example.demo.domain.Book;
+import com.example.demo.domain.AuthorEntity;
+import com.example.demo.domain.BookEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +17,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class BookRepositoryIntegrationTests {
+public class BookEntityRepositoryIntegrationTests {
 
     private BookRepository underTest;
 
     @Autowired
-    public BookRepositoryIntegrationTests(BookRepository underTest) {
+    public BookEntityRepositoryIntegrationTests(BookRepository underTest) {
         this.underTest = underTest;
     }
 
     @Test
     public void testThatBookCanBeCreatedAndRecalled() {
-        Author author = TestDataUtil.createTestAuthorA();
-        Book book = TestDataUtil.createTestBookA(author);
-        underTest.save(book);
-        Optional<Book> result = underTest.findById(book.getIsbn());
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorEntityA();
+        BookEntity bookEntity = TestDataUtil.createTestBookEntityA(authorEntity);
+        underTest.save(bookEntity);
+        Optional<BookEntity> result = underTest.findById(bookEntity.getIsbn());
         assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(book);
+        assertThat(result.get()).isEqualTo(bookEntity);
     }
 
 }
